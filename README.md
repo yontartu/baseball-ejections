@@ -4,7 +4,7 @@ In sports competition, emotions tend to run high. Sometimes, a player or coach m
 
 This project seeks to investigate this puzzle within the context of baseball. This research topic falls within the field of baseball analytics, and answering my research question would be of strategic interest to a team seeking to optimize its in-game performance. Depending on whether an ejection causes a team to perform better or worse, it may make sense for a manager to bite his tongue, rather than engaging an umpire in an argument. However, it may also be the case that the effect of an ejection on team performance is dependent on what role the individual plays on the team or how much he contributes to the team’s success. 
 
-* Data: Play-by-play data from 16 MLB seasons (2000 through 2015). Link to data source: [Retrosheet play-by-play data](http://www.retrosheet.org/eventfile.htm#5). 
+* Data: Play-by-play data from 16 MLB seasons (2000 through 2015). Link to data source: [Retrosheet play-by-play data](http://www.retrosheet.org/eventfile.htm). 
 * Next steps: Finish loading data into a PostgreSQL database, and generate summary statistics such as means difference of runs scored/allowed comparing before versus after an ejection.
 
 ### Set-up Instructions
