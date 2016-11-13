@@ -1,0 +1,29 @@
+# Recovering from a git reset --hard
+
+1. Check the reflog, reset the head to where you want it
+
+	git reflog
+	git reset HEAD@{<A commit number goes here>}
+
+will bring you back to the state where you accidentally deleted your files. Running git status, you should see your files you're trying to recover with "deleted:" next to them. 
+
+2. For each of the deleted files, do:
+
+	git add <deleted file to add back>
+	git commit -m "deleted file" <deleted file>
+	
+3. After adding and commiting all the deleted files, do:
+
+	git log --diff-filter=D --summary
+
+4. Find the large commit hash above each deleted file and run
+
+	git checkout <long disgusting commit hash>^1 <original file name>
+
+which will add back the file to your working (local) directory!
+
+
+These two resources were extremely helpful:
+
+http://hibbard.eu/how-to-restore-a-previously-deleted-file-from-a-git-repository/
+http://stackoverflow.com/questions/5788037/recover-from-git-reset-hard
