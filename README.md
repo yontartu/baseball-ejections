@@ -7,13 +7,27 @@ This project seeks to investigate this puzzle within the context of baseball. Th
 * Data: Play-by-play data from 16 MLB seasons (2000 through 2015). Link to data source: [Retrosheet play-by-play data](http://www.retrosheet.org/eventfile.htm). 
 * Next steps: Finish loading data into a PostgreSQL database, and generate summary statistics such as means difference of runs scored/allowed comparing before versus after an ejection.
 
-### Set-up Instructions
+### Set-Up Instructions
 
 Borrowed heavily from bedward's code for [setting up a Postgres database](https://github.com/yontartu/baseball_analysis/tree/master/retrosheet).
 
+Set-Up Steps (to create the tables **ejection_final** for staging, and **event_final** for analysis):
+1. Start with the original bedwards tables for ingesting raw data using BEVENT.exe, event_ingest 
+2. In Jupyter, using the gen_ejection_data function, create a flat file of ejections data (something like **ejection_ingest.csv**) to pull into Postgres (as **ejection_ingest**)
+* Using the updated version of the function, this will recode the event_tx_ej column to correctly exclude any “NP” records
+* See bedwards’ code for how to do insert data from CSV into Postgres: 
+``` 
+copy ejections_stage from ‘ejections_stage.csv’ cvs;
 ```
-test block of code
-```
+3. Create **event_ejection_stage** table: 
+    1. Initialize a blank table with the right variable types.
+    2. Insert ejection records from **ejection_ingest**.
+    3. Insert event records from **event_ingest**.
+4. Create **event_final** table:
+    1. Initialize a blank table with the right variable types.
+    2. Insert all records (event records and ejections records) from **event_ejection_stage**, adding two new calculated fields with window functions:
+        * event_uid
+        * event_id
 
 
 ### Resources
