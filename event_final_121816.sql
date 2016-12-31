@@ -1,3 +1,12 @@
+--drop table if exists event_final;
+--create table event_final(
+
+
+--)
+
+/*** STEP 1: Insert ejection_stage data into event_final ***/
+/*** STEP 2: Insert event_stage date into event_final ***/
+
 --drop table if exists event_test;
 
 create table event_test(

@@ -14,7 +14,7 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 1. Start with the original bedwards tables for ingesting raw data using BEVENT.exe, **event_ingest** 
 2. In Jupyter, using the gen_ejection_data function, create a flat file of ejections data (something like **ejection_ingest.csv**) to pull into Postgres (as **ejection_ingest**)
 	* Using the updated version of the function, this will recode the event_tx_ej column to correctly exclude any “NP” records
-	* See bedwards’ code for how to do insert data from CSV into Postgres: `copy ejections_stage from ‘ejections_stage.csv’ cvs;`
+	* See bedwards’ code for how to do insert data from CSV into Postgres: `copy ejections_stage from ‘/full/path/to/ejections_ingest.csv’ csv;`
 3. Create **event_ejection_stage** table: 
     1. Initialize a blank table with the right variable types.
     2. Insert ejection records from **ejection_ingest**.
@@ -29,3 +29,21 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 ### Resources
 
 * The [Retrosheet Event File documentation](http://www.retrosheet.org/eventfile.htm) is very helpful for decoding pitch sequence or event text codes.
+
+
+Notes:
+synthetic control
+
+
+
+
+
+
+
+
+
+
+
+
+
+
