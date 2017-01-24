@@ -1,4 +1,4 @@
-/*** 1. event_ingest table, using event_ingest.csv (including prelim set-up steps) ***/
+/*** Create three data types, "fields" and "event_cd_desc" tables ***/
 
 create type hand_cd_type as enum('L', 'R');
 create type battedball_cd_type as enum('F', 'L', 'P', 'G');
@@ -16,7 +16,133 @@ create table event_cd_desc (
   abbreviation varchar(4) not null
 );
 
-create table event_ingest (
+
+
+/*** Create "event_ingest_raw" table, using event_ingest.csv ***/
+
+create table event_ingest_raw (
+  game_id varchar,
+  away_team_id varchar,
+  inn_ct varchar,
+  bat_home_id varchar,
+  outs_ct varchar,
+  balls_ct varchar,
+  strikes_ct varchar,
+  pitch_seq_tx varchar,
+  away_score_ct varchar,
+  home_score_ct varchar,
+  bat_id varchar,
+  bat_hand_cd varchar,
+  resp_bat_id varchar,
+  resp_bat_hand_cd varchar,
+  pit_id varchar,
+  pit_hand_cd varchar,
+  resp_pit_id varchar,
+  resp_pit_hand_cd varchar,
+  pos2_fld_id varchar,
+  pos3_fld_id varchar,
+  pos4_fld_id varchar,
+  pos5_fld_id varchar,
+  pos6_fld_id varchar,
+  pos7_fld_id varchar,
+  pos8_fld_id varchar,
+  pos9_fld_id varchar,
+  base1_run_id varchar,
+  base2_run_id varchar,
+  base3_run_id varchar,
+  event_tx varchar,
+  leadoff_fl varchar,
+  ph_fl varchar,
+  bat_fld_cd varchar,
+  bat_lineup_id varchar,
+  event_cd varchar,
+  bat_event_fl varchar,
+  ab_fl varchar,
+  h_fl varchar,
+  sh_fl varchar,
+  sf_fl varchar,
+  event_outs_ct varchar,
+  dp_fl varchar,
+  tp_fl varchar,
+  rbi_ct varchar,
+  wp_fl varchar,
+  pb_fl varchar,
+  fld_cd varchar,
+  battedball_cd varchar,
+  bunt_fl varchar,
+  foul_fl varchar,
+  battedball_loc_tx varchar,
+  err_ct varchar,
+  err1_fld_cd varchar,
+  err1_cd varchar,
+  err2_fld_cd varchar,
+  err2_cd varchar,
+  err3_fld_cd varchar,
+  err3_cd varchar,
+  bat_dest_id varchar,
+  run1_dest_id varchar,
+  run2_dest_id varchar,
+  run3_dest_id varchar,
+  bat_play_tx varchar,
+  run1_play_tx varchar,
+  run2_play_tx varchar,
+  run3_play_tx varchar,
+  run1_sb_fl varchar,
+  run2_sb_fl varchar,
+  run3_sb_fl varchar,
+  run1_cs_fl varchar,
+  run2_cs_fl varchar,
+  run3_cs_fl varchar,
+  run1_pk_fl varchar,
+  run2_pk_fl varchar,
+  run3_pk_fl varchar,
+  run1_resp_pit_id varchar,
+  run2_resp_pit_id varchar,
+  run3_resp_pit_id varchar,
+  game_new_fl varchar,
+  game_end_fl varchar,
+  pr_run1_fl varchar,
+  pr_run2_fl varchar,
+  pr_run3_fl varchar,
+  removed_for_pr_run1_id varchar,
+  removed_for_pr_run2_id varchar,
+  removed_for_pr_run3_id varchar,
+  removed_for_ph_bat_id varchar,
+  removed_for_ph_bat_fld_cd varchar,
+  po1_fld_cd varchar,
+  po2_fld_cd varchar,
+  po3_fld_cd varchar,
+  ass1_fld_cd varchar,
+  ass2_fld_cd varchar,
+  ass3_fld_cd varchar,
+  ass4_fld_cd varchar,
+  ass5_fld_cd varchar,
+  event_id varchar
+);
+
+
+
+/*** Create "ejection_ingest_raw" table, using ejection_ingest.csv ***/
+
+create table ejection_ingest_raw (
+  game_id varchar
+  , inning varchar
+  , batting_team varchar 
+  , batter varchar
+  , pitch_sequence varchar
+  , event_text varchar
+  , ejection_flag varchar
+  , ejectee varchar 
+  , job_code varchar
+  , ump_id varchar
+  , reason varchar
+);
+
+
+
+/*** Create "event" table, using "event_ingest_raw" table ***/
+
+create table event (
   event_uid varchar(15) primary key,
   game_id varchar(12) not null,
   game_date date not null,
@@ -128,9 +254,9 @@ create table event_ingest (
 
 
 
-/*** 2. ejection_ingest table, using ejection_data_2000-2015.csv ***/
+/*** Create "ejection" table, using "ejection_ingest_raw" table ***/
 
-create table ejection_ingest (
+create table ejection (
   game_id varchar(24) not null,
   inn_ct integer not null,
   bat_home_id boolean not null,
@@ -146,7 +272,7 @@ create table ejection_ingest (
 
 
 
-/*** 3. event_ejection_stage table, using event_ingest and ejection_ingest tables ***/
+/*** Create "event_ejection_stage" table, using "event" and "ejection" tables ***/
 
 create table event_ejection_stage (
   event_uid varchar(255),
@@ -266,7 +392,8 @@ create table event_ejection_stage (
 );
 
 
-/*** 4. event_final table, using event_ejection_stage ***/
+
+/*** Create "event_final" table, using "event_ejection_stage" stage ***/
 
 create table event_final (
   event_uid varchar(255) primary key,
