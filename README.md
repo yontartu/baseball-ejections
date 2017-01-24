@@ -4,44 +4,43 @@ In sports competition, emotions tend to run high. Sometimes, a player or coach m
 
 This project seeks to investigate this puzzle within the context of baseball. This research topic falls within the field of baseball analytics, and answering my research question would be of strategic interest to a team seeking to optimize its in-game performance. Depending on whether an ejection causes a team to perform better or worse, it may make sense for a manager to bite his tongue, rather than engaging an umpire in an argument. However, it may also be the case that the effect of an ejection on team performance is dependent on what role the individual plays on the team or how much he contributes to the team’s success. 
 
-* Data: Play-by-play data from 16 MLB seasons (2000 through 2015). Link to data source: [Retrosheet play-by-play data](http://www.retrosheet.org/eventfile.htm). 
-* Next steps: Finish loading data into a PostgreSQL database, and generate summary statistics such as means difference of runs scored/allowed comparing before versus after an ejection.
-
 ## Set-Up Instructions
-
-##### Prerequisites
-
-*  
-*
-*
 
 Borrowed heavily from bedward's code for [setting up a Postgres database](https://github.com/bedwards/baseball_analysis/tree/master/retrosheet).
 
-##### 1. Download raw play-by-play data from Retrosheet
+#### Prerequisites
+
+* BEVENT.EXE
+* Postgres
+* Homebrew and Wine
+
+#### 1. Download raw play-by-play data from Retrosheet
 
 `bash download_raw_data.sh`
 
-##### 2. Generate one CSV containing all ejection records
+#### 2. Generate one CSV containing all ejection records
 
 `python generate_ejection_data.py`
 
-##### 3. Initialize `baseball-ejections` database and set up schemas
+#### 3. Initialize `baseball-ejections` database and set up schemas
 
 `bash initialize_database.sh`
 
-##### 4. Prepare event data using Retrosheet's `BEVENT.exe` tool (after first navigating to the `/data` directory with the TEAM files and coping `prepare_event_data.sh` to this folder)
+#### 4. Prepare event data using Retrosheet's `BEVENT.EXE` tool (after first navigating to the `/data` directory with the TEAM files and coping `prepare_event_data.sh` to this folder)
 
-`cd /path/to/data/`
-`mv ../prepare_event_data.sh prepare_event_data.sh`
-`bash prepare_event_data.sh`
+```
+cd /path/to/data/
+mv ../prepare_event_data.sh prepare_event_data.sh
+bash prepare_event_data.sh
+```
 
-##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data, and insert data into `event_ejection_stage` and `event_final` tables
+#### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data, and insert data into `event_ejection_stage` and `event_final` tables
 
 `bash import_ ...`
 
 
 
-##### 6. Update with missing ejection data for 7 team-seasons, and update with 2016 event and ejection data
+#### 6. Update with missing ejection data for 7 team-seasons, and update with 2016 event and ejection data
 
 
 
@@ -72,6 +71,7 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 ## Resources
 
 * The [Retrosheet Event File documentation](http://www.retrosheet.org/eventfile.htm) is very helpful for decoding pitch sequence or event text codes.
+* Link to Retrosheet [play-by-play data](http://www.retrosheet.org/eventfile.htm). 
 
 ## Notes
 
@@ -84,6 +84,8 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 	* unzip 'data/bevent.zip' -d data/
 * put prepare_event_data.sh, bevent.exe, teamfiles and eventfiles in the same director!!!
 * http://www.pitchbypitch.com/tag/bevent/
+* Finish loading data into a PostgreSQL database, and generate summary statistics such as means difference of runs scored/allowed comparing before versus after an ejection.
+
 
 
 
