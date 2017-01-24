@@ -27,14 +27,14 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 
 `bash initialize_database.sh`
 
-##### 4. Prepare event data using Retrosheet's `BEVENT.EXE` tool (after first navigating to the `/data` directory with the TEAM files and coping `prepare_event_data.sh` to this folder)
+##### 4. Prepare event data using Retrosheet's `BEVENT.EXE` tool (first navigating to the `/data` directory with the TEAM files and copy `prepare_event_data.sh` to this folder)
 
 ```
-cd /path/to/data/
+cd data/
 mv ../prepare_event_data.sh prepare_event_data.sh
 bash prepare_event_data.sh
 ```
-##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data into `_raw` tables and intermediate tables, and insert data into `event_ejection_stage` and `event_final` tables
+##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data into `_raw` and intermediate (`event` and `ejection`) tables, and insert data into `event_ejection_stage` and `event_final` tables
 
 `bash import_data.sh`
 
@@ -49,9 +49,9 @@ bash prepare_event_data.sh
 
 ## Notes
 
-* Synthetic controls, & other identification strategies
-* Generate summary statistics, for example means difference of runs scored/allowed comparing before versus after an ejection
-* http://www.pitchbypitch.com/tag/bevent/
+* Explore synthetic controls, and other identification strategies.
+* Generate summary statistics, for example means difference of runs scored/allowed comparing before versus after an ejection.
+* Useful overview of how to use the [BEVENT.EXE tool](http://www.pitchbypitch.com/tag/bevent/).
 
 
 
