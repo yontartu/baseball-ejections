@@ -17,30 +17,42 @@ Borrowed heavily from bedward's code for [setting up a Postgres database](https:
 
 ##### 1. Download raw play-by-play data from Retrosheet
 
-`bash download_raw_data.sh`
+```
+$ bash download_raw_data.sh
+```
 
 ##### 2. Generate one CSV containing all ejection records
 
-`python generate_ejection_data.py`
+```
+$ python generate_ejection_data.py
+```
 
 ##### 3. Initialize `baseball-ejections` database and set up schemas
 
-`bash initialize_database.sh`
+```
+$ bash initialize_database.sh
+```
 
 ##### 4. Prepare event data using Retrosheet's `BEVENT.EXE` tool (first navigating to the `/data` directory with the TEAM files and copy `prepare_event_data.sh` to this folder)
 
 ```
-cd data/
-mv ../prepare_event_data.sh prepare_event_data.sh
-bash prepare_event_data.sh
+$ cd data/
+$ mv ../prepare_event_data.sh prepare_event_data.sh
+$ bash prepare_event_data.sh
+$ wc -l event_ingest.csv #3106661 rows
 ```
-##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data into `_raw` and intermediate (`event` and `ejection`) tables, and insert data into `event_ejection_stage` and `event_final` tables
 
-`bash import_data.sh`
+##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data into `_raw` and intermediate tables (`event` and `ejection`), and insert data into `event_ejection_stage` and `event_final` tables
+
+```
+$ bash import_data.sh
+```
 
 ##### 6. Update with missing ejection data for 7 team-seasons, and update with 2016 event and ejection data
 
-`to do`
+```
+to do
+```
 
 ## Resources
 
