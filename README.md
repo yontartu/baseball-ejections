@@ -27,19 +27,21 @@ $ bash download_raw_data.sh
 $ python generate_ejection_data.py
 ```
 
-##### 3. Initialize `baseball-ejections` database and set up schemas
-
-```
-$ bash initialize_database.sh
-```
-
-##### 4. Prepare event data using Retrosheet's `BEVENT.EXE` tool (first navigating to the `/data` directory with the TEAM files and copy `prepare_event_data.sh` to this folder)
+##### 3. Prepare event data using Retrosheet's `BEVENT.EXE` tool (first navigating to the `data/` directory with the TEAM files and copying `prepare_event_data.sh` to this folder before executing this script in `/data`)
 
 ```
 $ cd data/
-$ mv ../prepare_event_data.sh prepare_event_data.sh
+$ wget http://www.retrosheet.org/bevent.zip
+$ unzip bevent.zip
+$ cp ../prepare_event_data.sh prepare_event_data.sh
 $ bash prepare_event_data.sh
-$ wc -l event_ingest.csv #3106661 rows
+$ wc -l event_ingest.csv #3081570 rows 
+```
+
+##### 4. Initialize `baseball-ejections-data` database and set up schemas
+
+```
+$ bash initialize_database.sh
 ```
 
 ##### 5. Import `event_ingest.csv` and `ejection_ingest.csv` data into `_raw` and intermediate tables (`event` and `ejection`), and insert data into `event_ejection_stage` and `event_final` tables
