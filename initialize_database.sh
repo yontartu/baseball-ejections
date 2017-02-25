@@ -1,3 +1,3 @@
-createdb baseball-ejections
+createdb baseball-ejections-data
 
-psql baseball-ejections -f create_schema.sql
+psql baseball-ejections-data -f create_schema.sql

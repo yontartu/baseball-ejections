@@ -16,7 +16,7 @@ for filename in glob.iglob('data/*.EV*'):
     raw_event_data = gen_ejection_data(filename)
     export_df = export_df.append(raw_event_data)
 
-export_to_csv = export_df.to_csv('ejection_ingest_2000-2015.csv')
+export_to_csv = export_df.to_csv('ejection_ingest_2000-2015.csv', index=False)
 
 
 ### Testing on a single file

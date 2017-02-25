@@ -1,6 +1,6 @@
 /*** Create three data types, "fields" and "event_cd_desc" tables ***/
 
-create type hand_cd_type as enum('L', 'R');
+create type hand_cd_type as enum('L', 'R', 'B');
 create type battedball_cd_type as enum('F', 'L', 'P', 'G');
 create type err_cd_type as enum('F', 'D', 'N', 'T');
 
@@ -265,14 +265,35 @@ create table ejection (
   event_tx varchar(255) not null,
   ej_code varchar (8) not null,
   ejectee varchar (24) not null,
-  job_code varchar (8) not null,
+  job_code varchar (11),
   ump_id varchar(24) not null,
-  reason varchar(255) not null
+  reason varchar(255) 
 );
 
 
 
-/*** Create "event_ejection_stage" table, using "event" and "ejection" tables ***/
+/*** Create "ejection_stage" table, using "ejection" table ***/
+
+create table ejection_stage (
+  game_id varchar(24) not null,
+  game_date date not null,
+  home_team_id varchar(3) not null,
+  inn_ct integer not null,
+  bat_home_id boolean not null,
+  bat_id varchar(8) not null,
+  pitch_seq_tx varchar(255),
+  event_tx varchar(255) not null,
+  ej_code varchar (8) not null,
+  ejectee varchar (24) not null,
+  job_code varchar (11),
+  ump_id varchar(24) not null,
+  reason varchar(255),
+  outs_ct integer,
+  bat_lineup_id integer
+);
+
+
+/*** Create "event_ejection_stage" table, using "event" and "ejection_stage" tables ***/
 
 create table event_ejection_stage (
   event_uid varchar(255),
@@ -382,9 +403,9 @@ create table event_ejection_stage (
   ass4_fld_cd integer,
   ass5_fld_cd integer,
   event_id integer,
-  ej_code varchar(3),
+  ej_code varchar(8),
   ejectee varchar(50),
-  job_code varchar(2),
+  job_code varchar(11),
   ump_id varchar(50),
   reason varchar(255),
   event_id_new integer,
@@ -503,9 +524,9 @@ create table event_final (
   ass4_fld_cd integer,
   ass5_fld_cd integer,
   event_id integer,
-  ej_code varchar(3),
+  ej_code varchar(8),
   ejectee varchar(50),
-  job_code varchar(2),
+  job_code varchar(11),
   ump_id varchar(50),
   reason varchar(255)
 );
