@@ -1,5 +1,10 @@
-for filename in `ls ~/Box_Sync/GitHub/Springboard/Capstone_Project/Analysis/data/*.EV*`
+for filename in `ls ~/Box_Sync_OLD/GitHub/Springboard/Capstone_Project/Analysis/data/*.EV*`
 do
   year=`echo $filename | grep -Eo '[[:digit:]]{4}'`
-  wine ~/Box_Sync/GitHub/Springboard/Capstone_Project/Analysis/data/BEVENT.EXE -y $year -f 0-96 $filename > event_ingest.csv
+  file=`echo $filename | grep -o '...........$'`
+  echo $year
+  echo $file
+  wine BEVENT.EXE -y $year -f 0-96 $file >> event_ingest.csv
 done
+
+

@@ -1,27 +1,46 @@
-/*** Insert "ejection" data into "event_ejection_stage" ***/
+--Insert "ejection" data into "ejection_stage" 
+insert into ejection_stage
+select distinct 
+  ej.*, 
+  ev.outs_ct, 
+  ev.bat_lineup_id
+from ejection ej
+left join event ev
+  on ev.game_id = ej.game_id
+  --and ev.home_team_id = ej.home_team_id
+  and ev.inn_ct = ej.inn_ct
+  and ev.bat_home_id = ej.bat_home_id
+  and ev.bat_id = ej.bat_id
+  and ev.pitch_seq_tx = ej.pitch_seq_tx
+  and ev.event_tx = ej.event_tx
+  and outs_ct is not null
+;
 
+
+/*
+--Insert "ejection_stage" data into "event_ejection_stage" 
 insert into event_ejection_stage
 select 
   null as event_uid,
-  game_id_ej,
-  date(substring(game_id_ej from 4 for 8)) as game_date,
-  substring(game_id_ej from 4 for 4)::integer as game_year,
-  substring(game_id_ej from 8 for 2)::integer as game_month,
-  substring(game_id_ej from 10 for 2)::integer as game_day_of_month,
-  substring(game_id_ej from 12 for 1)::integer as game_number,
-  substring(game_id_ej from 1 for 3) as home_team_id,
+  game_id,
+  date(substring(game_id from 4 for 8)) as game_date,
+  substring(game_id from 4 for 4)::integer as game_year,
+  substring(game_id from 8 for 2)::integer as game_month,
+  substring(game_id from 10 for 2)::integer as game_day_of_month,
+  substring(game_id from 12 for 1)::integer as game_number,
+  substring(game_id from 1 for 3) as home_team_id,
   null as away_team_id,
-  inn_ct_ej::integer,
-  bat_home_id_ej::boolean,
-  game_id_ej || to_char(inn_ct_ej::integer, 'FM00') || bat_home_id_ej::integer as half_inning_id,
-  outs_ct_ej::integer,
+  inn_ct::integer,
+  bat_home_id::boolean,
+  game_id || to_char(inn_ct::integer, 'FM00') || bat_home_id::integer as half_inning_id,
+  null as outs_ct_ej, --
   null balls_ct,
   null strikes_ct,
-  nullif(pitch_seq_tx_ej, ''),
+  nullif(pitch_seq_tx, ''),
   null as away_score_ct,
   null as home_score_ct,
   null as runs,
-  bat_id_ej,
+  bat_id,
   null as bat_hand_cd,
   null,
   null,
@@ -40,11 +59,11 @@ select
   null,
   null,
   null,
-  event_tx_ej,
+  event_tx,
   null,
   null,
   null,
-  bat_lineup_id_ej,
+  null as bat_lineup_id, --
   null,
   null,
   null,
@@ -117,14 +136,13 @@ select
   null,
   null
 from 
-  ejection
+  ejection_stage
 ;
 
 
 
-/*** Insert "event" data into "event_ejection_stage" ***/
-
-insert into event_ejection_stage
+--Insert "event" data into "event_ejection_stage"
+insert into event_ejection_stage 
 select
   game_id || to_char(event_id::integer, 'FM000') as event_uid,
   game_id,
@@ -146,9 +164,9 @@ select
   home_score_ct::integer,
   away_score_ct::integer + home_score_ct::integer as runs,
   bat_id,
-  nullif(bat_hand_cd, '?')::hand_cd_type,
+  bat_hand_cd::hand_cd_type,
   resp_bat_id,
-  nullif(resp_bat_hand_cd, '?')::hand_cd_type,
+  resp_bat_hand_cd::hand_cd_type,
   pit_id,
   pit_hand_cd::hand_cd_type,
   resp_pit_id,
@@ -182,7 +200,7 @@ select
   wp_fl::boolean,
   pb_fl::boolean,
   fld_cd::integer,
-  nullif(battedball_cd, '')::battedball_cd_type,
+  battedball_cd::battedball_cd_type,
   bunt_fl::boolean,
   foul_fl::boolean,
   nullif(battedball_loc_tx, ''),
@@ -239,8 +257,7 @@ from
 
 
 
-/*** Insert "event_ejection_stage" data into "event_final" ***/
-
+--Insert "event_ejection_stage" data into "event_final" 
 insert into event_final
 select
   game_id || to_char( (rank() over (partition by game_id order by half_inning_id, outs_ct, bat_lineup_id, balls_ct,   
@@ -359,4 +376,6 @@ select
 from
   event_ejection_stage 
 ;
+
+*/
 

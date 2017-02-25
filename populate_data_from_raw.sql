@@ -120,16 +120,16 @@ from
 insert into ejection
 select
   game_id,
-  inn_ct,
-  bat_home_id,
-  bat_id,
-  pitch_seq_tx,
-  event_tx,
-  ej_code,
+  inning::integer as inn_ct,
+  batting_team::boolean as bat_home_id,
+  batter as bat_id,
+  pitch_sequence as pitch_seq_tx,
+  event_text as event_tx,
+  ejection_flag as ej_code,
   ejectee,
   job_code,
   ump_id,
   reason
 from
-  ejections_ingest_raw
+  ejection_ingest_raw
 ;
